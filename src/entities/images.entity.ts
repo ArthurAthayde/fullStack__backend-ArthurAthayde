@@ -1,11 +1,4 @@
-import {
-  Column,
-  CreateDateColumn,
-  Decimal128,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Anouncement } from "./anouncement.entity";
 
 @Entity("images")
