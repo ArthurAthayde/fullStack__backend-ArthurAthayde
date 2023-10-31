@@ -112,7 +112,7 @@ const update = async (
   return userReturnSchema.parse(newUserUpdated);
 };
 
-const listId = async (userId: number) => {
+const readById = async (userId: number) => {
   const userRepository = AppDataSource.getRepository(User);
 
   const user = await userRepository.findOne({
@@ -128,4 +128,4 @@ const listId = async (userId: number) => {
   return user;
 };
 
-export default { create, destroy, update, listId };
+export default { create, destroy, update, readById };

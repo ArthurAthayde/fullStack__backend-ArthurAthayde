@@ -54,7 +54,7 @@ const createAnouncement = async (
   return anouncementSchema.parse(anouncement);
 };
 
-const listAnouncements = async (): Promise<Anouncement[]> => {
+const readAnouncements = async (): Promise<Anouncement[]> => {
   const anouncementRepository = getAnouncementRepository();
   const anouncements = await anouncementRepository.find({
     relations: ["user"],
@@ -62,7 +62,7 @@ const listAnouncements = async (): Promise<Anouncement[]> => {
   return anouncements;
 };
 
-const getAnouncementById = async (userId: number): Promise<Anouncement> => {
+const readAnouncementById = async (userId: number): Promise<Anouncement> => {
   const anouncementRepository = getAnouncementRepository();
   const anouncement = await anouncementRepository.findOne({
     where: {
@@ -82,7 +82,7 @@ const getAnouncementById = async (userId: number): Promise<Anouncement> => {
   return anouncement;
 };
 
-const listAnouncementsByAdvertiser = async (
+const readAnouncementsByAdvertiser = async (
   userId: number
 ): Promise<Anouncement[]> => {
   const userRepository = getUserRepository();
@@ -112,25 +112,6 @@ const listAnouncementsByAdvertiser = async (
   });
 
   return anouncements;
-};
-
-const deleteAnouncement = async (
-  bodyId: string
-): Promise<{ message: string }> => {
-  const anouncementRepository = getAnouncementRepository();
-
-  const findAnouncement = await anouncementRepository.findOne({
-    where: {
-      id: parseInt(bodyId),
-    },
-  });
-
-  if (!findAnouncement) {
-    throw new AppError("This advertisement doesn't exist", 404);
-  }
-
-  await anouncementRepository.remove(findAnouncement);
-  return { message: "Announcement deleted!" };
 };
 
 const updateAnouncement = async (
@@ -184,11 +165,30 @@ const updateAnouncement = async (
   return returnedAnouncement || null;
 };
 
+const deleteAnouncement = async (
+  bodyId: string
+): Promise<{ message: string }> => {
+  const anouncementRepository = getAnouncementRepository();
+
+  const findAnouncement = await anouncementRepository.findOne({
+    where: {
+      id: parseInt(bodyId),
+    },
+  });
+
+  if (!findAnouncement) {
+    throw new AppError("This advertisement doesn't exist", 404);
+  }
+
+  await anouncementRepository.remove(findAnouncement);
+  return { message: "Announcement deleted!" };
+};
+
 export default {
   create: createAnouncement,
-  list: listAnouncements,
+  read: readAnouncements,
   destroy: deleteAnouncement,
   update: updateAnouncement,
-  listId: getAnouncementById,
-  listByAdvertiser: listAnouncementsByAdvertiser,
+  readById: readAnouncementById,
+  readByAdvertiser: readAnouncementsByAdvertiser,
 };
