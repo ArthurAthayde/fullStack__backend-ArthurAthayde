@@ -7,6 +7,7 @@ import {
   userAddress,
   userAddressReturnSchema,
   userAdressCreateSchema,
+  GetOneUserSchema,
 } from "./user.schemas";
 import {
   addressSchema,
@@ -58,4 +59,5 @@ export {
   commentSchema,
   commentReadSchema,
   commentReturnSchema,
+  GetOneUserSchema,
 };

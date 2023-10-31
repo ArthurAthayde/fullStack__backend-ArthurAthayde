@@ -31,6 +31,13 @@ const userAddress = z.object({
   complement: z.string().max(100).nullable(),
 });
 
+const GetOneUserSchema = userSchema.pick({
+  id: true,
+  is_seller: true,
+  name: true,
+  description: true,
+});
+
 const userCreateSchema = userSchema.omit({
   id: true,
 });
@@ -55,4 +62,5 @@ export {
   userAddress,
   userAddressReturnSchema,
   userAdressCreateSchema,
+  GetOneUserSchema,
 };
